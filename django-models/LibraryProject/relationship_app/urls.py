@@ -48,4 +48,4 @@ from django.contrib.auth.decorators import permission_required
 urlpatterns = [
     path('add_book/', permission_required('relationship_app.can_add_book')(views.add_book), name='add_book'),
     path('edit_book/<int:book_id>/', permission_required('relationship_app.can_change_book')(views.edit_book), name='edit_book'),
-]
+    path('delete_book/<int:book_id>/', permission_required('relationship_app.can_delete_book')(views.delete_book), name='delete_book'),]
