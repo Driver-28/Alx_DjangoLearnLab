@@ -16,10 +16,18 @@ urlpatterns = [
     path('logout/', CustomLogoutView.as_view(), name='logout'),
 ]
 
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from . import views  # Import your views
+from django.contrib.auth.views import LoginView, LogoutView  # Import built-in auth views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('relationship_app.urls')),  # Include your app URLs
+    # Registration view
+    path('register/', views.register, name='register'),
+
+    # Login and Logout views with custom templates
+    path('login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
+    path('logout/', LogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
+    
+    # Home view (optional for testing redirection after login)
+    path('', views.home, name='home'),
 ]
