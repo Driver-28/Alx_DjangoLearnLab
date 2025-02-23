@@ -1,21 +1,19 @@
 from django.shortcuts import render, get_object_or_404
-
-# Create your views here.
 from django.views.generic import DetailView
 from .models import Book, Library
 
-# Function-based view: List all books
+# Function-based view: List all books with explicit template path
 def list_books(request):
-    books = Book.objects.all()  # Query all books
-    return render(request, 'list_books.html', {'books': books})
+    books = Book.objects.all()
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
 
-# Class-based view: Display details for a specific library
+# Class-based view: Library detail
 class LibraryDetailView(DetailView):
-    model = Library  # Model to use
-    template_name = 'library_detail.html'  # Template to render
-    context_object_name = 'library'  # Name for use in template
+    model = Library
+    template_name = 'relationship_app/library_detail.html'  # Updated template path
+    context_object_name = 'library'
 
     def get_object(self):
-        library_id = self.kwargs.get("pk")  # Get library ID from URL
+        library_id = self.kwargs.get("pk")
         return get_object_or_404(Library, pk=library_id)
