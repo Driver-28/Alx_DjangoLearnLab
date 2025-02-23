@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_40i4
-from django.views.generic import DetailView
+from django.views.generic.detail import DetailView
 from .models import Library  # Explicitly import Library
 from .models import Book, Library
 
