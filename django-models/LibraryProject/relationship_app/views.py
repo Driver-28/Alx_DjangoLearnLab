@@ -23,8 +23,9 @@ class LibraryDetailView(DetailView):
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib.auth.views import LoginView, LogoutView
 
-# Register view
+# Registration View
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -36,6 +37,8 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
 
-# Home view (for testing redirection after login)
+# LoginView and LogoutView are already set in urls.py using custom templates
+
+# Home view (for testing)
 def home(request):
     return render(request, 'relationship_app/home.html', {'user': request.user})
