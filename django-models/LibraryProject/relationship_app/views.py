@@ -42,3 +42,27 @@ def register(request):
 # Home view (for testing)
 def home(request):
     return render(request, 'relationship_app/home.html', {'user': request.user})
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import user_passes_test, login_required
+
+# Helper function to check user roles
+def check_role(role):
+    def role_checker(user):
+        return user.is_authenticated and user.userprofile.role == role
+    return role_checker
+
+# Admin View
+@user_passes_test(check_role('Admin'))
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html', {'role': 'Admin'})
+
+# Librarian View
+@user_passes_test(check_role('Librarian'))
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html', {'role': 'Librarian'})
+
+# Member View
+@user_passes_test(check_role('Member'))
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html', {'role': 'Member'})
