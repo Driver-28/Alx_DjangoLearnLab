@@ -2,16 +2,16 @@ import os
 import django
 
 # Set up Django environment
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project_name.settings')  # Replace project_name with your actual project name
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project_name.settings')  # Replace 'project_name' with your actual project name
 django.setup()
 
 from relationship_app.models import Author, Book, Library, Librarian
 
-# Query all books by a specific author
+# Query all books by a specific author using objects.filter()
 def get_books_by_author(author_name):
     try:
         author = Author.objects.get(name=author_name)
-        books = author.books.all()  # Using related_name from ForeignKey
+        books = Book.objects.filter(author=author)  # Using filter() method
         print(f"Books by {author_name}:")
         for book in books:
             print(f"- {book.title}")
@@ -45,7 +45,7 @@ def get_librarian_for_library(library_name):
 
 # Testing the functions with sample data
 if __name__ == "__main__":
-    # Replace the values with actual data from your database
+    # Replace these values with actual data from your database
     get_books_by_author("George Orwell")
     get_books_in_library("Central Library")
     get_librarian_for_library("Central Library")
