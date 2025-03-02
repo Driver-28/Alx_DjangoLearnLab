@@ -17,4 +17,6 @@ def edit_book(request, book_id):
 @permission_required('bookshelf.can_view', raise_exception=True)
 def view_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
-    return render(request, 'view_book.html', {'book': book})
+    return render(request, 'view_book.html', {'book': book}
+
+)
