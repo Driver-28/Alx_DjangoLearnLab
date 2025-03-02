@@ -20,3 +20,9 @@ def view_book(request, book_id):
     return render(request, 'view_book.html', {'book': book}
 
 )
+from django.shortcuts import render
+from .models import Book
+
+def book_list(request):
+    books = Book.objects.all()  # Get all books from the database
+    return render(request, 'book_list.html', {'books': books})
