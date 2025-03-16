@@ -7,6 +7,7 @@ from .serializers import BookSerializer
 import django_filters
 from django_filters import rest_framework as filters
 from rest_framework import viewsets
+from . import views
 
 # Filter class to filter books by title, author, or publication year
 class BookFilter(django_filters.FilterSet):
