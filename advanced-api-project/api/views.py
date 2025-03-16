@@ -5,6 +5,7 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from .models import Book
 from .serializers import BookSerializer
 import django_filters
+import rest_framework.filters import OrderingFilter
 
 # Filter class to filter books by title, author, or publication year
 class BookFilter(django_filters.FilterSet):
