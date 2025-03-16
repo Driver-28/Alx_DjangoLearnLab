@@ -27,6 +27,10 @@ class BookListView(generics.ListAPIView):
     ordering_fields = ['title', 'publication_year', 'author__name']  # Allow ordering by title, publication_year, and author name
     ordering = ['title']  # Default ordering by title
 
+    def get(self, request, *args, **kwargs):
+        print("OrderingFilter is active!")
+        return super().get(request, *args, **kwargs)
+
 class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
