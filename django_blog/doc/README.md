@@ -17,3 +17,15 @@
 3. Create a superuser: `python manage.py createsuperuser`
 4. Start the server: `python manage.py runserver`
 
+## Comment System
+
+### Features:
+- Users can comment on blog posts.
+- Only authenticated users can add comments.
+- Only the comment author can edit or delete their comment.
+
+### URL Structure:
+- Create Comment: `/posts/<post_id>/comments/new/`
+- Edit Comment: `/comments/<comment_id>/edit/`
+- Delete Comment: `/comments/<comment_id>/delete/`
+
