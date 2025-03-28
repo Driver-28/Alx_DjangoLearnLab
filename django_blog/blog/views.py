@@ -12,6 +12,8 @@ from django.urls import reverse_lazy
 from .models import post, Comment
 from .forms import PostForm, CommentForm
 from django.shortcuts import get_object_or_404, redirect
+from django.db.models import Q
+from taggit.models import Tag
 
 # Create your views here.
 
@@ -64,6 +66,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user  # Set author as logged-in user
+        self.object.tags.set(form.cleaned_data['tags'])
         return super().form_valid(form)
 
 # Update a post (only the author can update)
@@ -72,7 +75,12 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     form_class = PostForm
     template_name = 'blog/post_form.html'
 
-    def test_func(self):
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        self.object.tags.set(form.cleaned_data['tags'])  # Update tags
+        return response
+
+    def test_func(self, form):
         post = self.get_object()
         return self.request.user == post.author  # Only the author can update
 
@@ -124,3 +132,27 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return self.object.post.get_absolute_url()
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            return Post.objects.filter(
+                Q(title__icontains=query) |
+                Q(content__icontains=query) |
+                Q(tags__name__icontains=query)
+            ).distinct()
+        return Post.objects.all()
+
+class PostByTagView(ListView):
+    model = Post
+    template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        return Post.objects.filter(tags__name=self.kwargs['tag'])

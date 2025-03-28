@@ -9,3 +9,9 @@
         <a href="{% url 'post-delete' post.pk %}">Delete</a>
     {% endif %}
 {% endblock %}
+
+<p>Tags:
+    {% for tag in post.tags.all %}
+        <a href="{% url 'tagged-posts' tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+</p>
