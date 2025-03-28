@@ -29,3 +29,16 @@
 - Edit Comment: `/comments/<comment_id>/edit/`
 - Delete Comment: `/comments/<comment_id>/delete/`
 
+## Tagging and Search Features
+
+### Tagging:
+- Users can assign multiple tags to posts.
+- Clicking a tag filters posts that share the same tag.
+
+### Search:
+- Users can search posts by title, content, or tags.
+
+### URL Structure:
+- Search: `/?q=search-term`
+- Filter by tag: `/tags/<tag-name>/`
+
