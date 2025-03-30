@@ -10,7 +10,7 @@ from rest_framework import status, permissions, generics
 from .serializers import UserSerializer, PostSerializer
 from .models import Post
 
-User = get_user_model()
+CustomUser = get_user_model()
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
@@ -62,6 +62,6 @@ class UserFeedView(generics.ListAPIView):
         return Post.objects.filter(author__in=user.following.all()).order_by("-created_at")
 class UserListView(generics.ListAPIView):
     """Retrieve all users"""
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
