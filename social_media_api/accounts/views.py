@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import get_user_model
-from rest_framework import status, permissions
+from rest_framework import status, permissions, generics
 from .serializers import UserSerializer, PostSerializer
 from .models import Post
 
@@ -60,3 +60,8 @@ class UserFeedView(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         return Post.objects.filter(author__in=user.following.all()).order_by("-created_at")
+class UserListView(generics.ListAPIView):
+    """Retrieve all users"""
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
