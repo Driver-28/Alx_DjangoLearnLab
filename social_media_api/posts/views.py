@@ -7,7 +7,7 @@ from .serializers import PostSerializer, CommentSerializer
 from django.contrib.auth import get_user_model
 from notifications.models import Notification
 from django.shortcuts import get_object_or_404
-from generics import get_object_or_404
+from rest_framework.generics import get_object_or_404
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
@@ -71,8 +71,10 @@ class UnlikePostView(generics.GenericAPIView):
             like.delete()
             return Response({"detail": "Post unliked successfully"}, status=status.HTTP_204_NO_CONTENT)
         return Response({"detail": "You haven't liked this post"}, status=status.HTTP_400_BAD_REQUEST)     
-class PostDetailView(APIView):
+class PostDetailView(generics.RetrieveAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
     def get(self, request, pk):
-        post = get_object_or_404(Post, pk=pk)
+        post = generics.get_object_or_404(Post, pk=pk)
         serializer = PostSerializer(post)
         return Response(serializer.data, status=status.HTTP_200_OK)
