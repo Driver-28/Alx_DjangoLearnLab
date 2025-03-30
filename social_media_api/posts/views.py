@@ -7,7 +7,7 @@ from .serializers import PostSerializer, CommentSerializer
 from django.contrib.auth import get_user_model
 from notifications.models import Notification
 from django.shortcuts import get_object_or_404
-from rest_framework.generics import get_object_or_404
+from generics import get_object_or_404
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
