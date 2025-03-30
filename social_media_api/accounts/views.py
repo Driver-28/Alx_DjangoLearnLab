@@ -7,6 +7,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from django.contrib.auth import get_user_model
 from rest_framework import status
+from .serializers import UserSerializer
 
 User = get_user_model()
 
