@@ -13,7 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 class PostForm(forms.ModelForms):
-    tags = forms.CharField(required=False, widget=TagWidget(), help_text="Separate tags with commas.")
+    tags = forms.CharField(required=False, widgets=TagWidget(), help_text="Separate tags with commas.")
     class Meta:
         model = post
         fields = ['title', 'content', 'tags']
